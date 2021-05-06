@@ -1,0 +1,129 @@
+
+<!-- A1 en modulo de la app PARA importar => module.ts A2 -->
+
+<h4>CurrencyPipe </h4>
+<!-- B1 3. CurrencyPipe     jugando con los pipes -->
+<!-- en => componente.ts B2 -->
+<!-- B3  pra formatear con el currency se pone el simbolo del pipe (|) luego 
+el currency  ...ahora si queremos cambiar la divisa se la pasa un paramtero para
+este pipe con dos puntos(:'EUR':'symbol':'   ') podemos ir cambiando dependiendo
+ en el tercer se pone numero de diginos.numero de decimale-maximo numero digitos 
+de la parte decimal  -->
+<p>precio: {{precio|currency:'EUR':'symbol':'5.1-1'}}</p>
+
+<hr>
+<h4>DecimalPipe</h4>
+<!-- C1.  4. DecimalPipe -->
+<!-- es mas comodo cuando uso nnumero grande en el ts =>app.component.ts C2  -->
+<!-- C3 el pipe decimal se llama number ...si quiero redondear sgue el mismo
+formato que currency -->
+<p>Numero: {{numero|number:'10.2-2'}}</p>
+
+<hr>
+<h4>DatePipe</h4>
+<!-- D1  5. DatePipe  PARA EL FORMATEO DE FECHAS -->
+<!-- en el ts =>app.ts D2 -->
+<!-- D3 podemos poner lo que nosotros queramos por ejemplo
+dd para dia y dos digitos
+MM para el mes y dos digitos.....LLLL para que sea literral
+yyyy para el anio con 4 digitos________PARA SABER mejor en la documentacion de
+angular .io/api/common/DatePipe  -->
+<!-- podemos hacer un CRONOMETRO SI En el ngOnInit en el ts =>app.component.ts D4 -->
+<p>Fecha: {{fechaActual|date:'dd-LLLL-yyyy HH:mm.ss'}}</p>
+
+<hr>
+<h4>PercentPipe</h4>
+<!-- E1.  6. PercentPipe
+nos permite de un numero que en principio no es un porcentaje
+podamos convertirlo en porcentaje  en el ts => E2 -->
+<!-- E3 -->
+
+<p>Numero aleatorio: {{numAleatorio|percent:'1.1-3'}}</p>
+
+<hr>
+<h4>JsonPipe</h4>
+<!-- F1.  7. JsonPipe
+nos sirve para coger un objeto mas complejoy obtener su representacion en
+formato string en el ts =>F2 -->
+<!-- F3 -->
+
+<p>{{estudiante|json}}</p>
+
+<hr>
+<h4>LowerCasePipe, UpperCasePipe y TitleCasePipe</h4>
+<!-- G1. 8. LowerCasePipe, UpperCasePipe y TitleCasePipe 
+nos sirven para modificar como quieremos que se vea un texto 
+en mayusculas, minuscular, etxc   EN EL ts=> G2 
+minusculas -> lowercase
+mayuscular -> uppercase
+primera letra de cada palabra en mayusculas -> titlecase -->
+<p>{{texto|uppercase}}</p>
+<p>{{texto|titlecase}}</p>
+<p>{{texto|lowercase}}</p>
+
+<hr>
+<!-- H1   9. SlicePipe es de importancia si trabajamos con conexiones y arrays
+---coge del array solo parte que nos interese tipo Slice  en el ts =>.ts H2-->
+<!-- H3 todo lo que estamos iterando le puedo colocar el pipe slice
+este slice recibe do parametros pripero el numero por el que vamos empezar a 
+recuperar y segundo el indice al cual vamos a dejar de recuperar 
+___esto va a ser mas interesante si cogemos el valor desde un slider-->
+<ul>
+    <li *ngFor="let animal of animales |slice:1:3">{{animal|slice:1:4}}</li>
+</ul>
+<!-- H4 haciendolo con ngModel -->
+<h5>Con ngModel</h5>
+<ul>
+    <li *ngFor="let animal of animales |slice:minimo:maximo">{{animal}}</li>
+</ul>
+<input type="range" min="0" [max]="animales.length" step="1" [(ngModel)]="minimo">{{minimo}}
+<input type="range" min="0" [max]="animales.length" step="1" [(ngModel)]="maximo">{{maximo}}
+
+<hr>
+<h4>AsyncPipe</h4>
+<!-- I1 10. AsyncPipe resuelve una promesa directamente dentro de nuestro html
+no tenemos que usar ni then catch ni async await en el ts =>ts I2-->
+<!-- I3 resolviendo la promesa sin hacer ni then ni async await -->
+<p>mENSAJE: {{prom|async}}</p>
+<h5>AsyncPipe mas complejo</h5>
+<!-- complejando ...del JSONplaceholder ..
+/importamos el httpClientModule
+/creamos el servicio post.service.ts inyectando luego  creando el metodo getAll de tipo promesa
+/en el ts creamos otra variable promPosts => app.component.ts I4-->
+<!-- I5 iterando .....OJO el promPosts|async   sevuelve el array de post-->
+<ul>
+    <li *ngFor="let post of promPosts|async">
+        {{post.title}}
+    </li>
+</ul>
+
+<hr>
+<h4>Custom Pipe (Invertir string)</h4>
+<!--J1   11. Custom Pipe (Invertir string) 
+POSIBILIDAD DE CREAR NUSTROS PROPIOS PIPES 
+EN LA TERMINAL crearmos un pipe ng generate pipe Reverso y automaicamente 
+se coloca en el NgModule del modulo  luego vamos al => reverso.pipe.ts J2-->
+<p>{{texto|reverso}}</p>
+
+<hr>
+<h4> Custom Pipe (Capitalize)</h4>
+<!-- K1 12. Custom Pipe (Capitalize) creamos en la terminal ng g p pipes/Capitalize --skipTests
+luego en => capializa.pipe.ts K2 -->
+<!-- k3  -->
+<P>{{texto|capitalize}}</P>
+
+<hr>
+<h4> Custom Pipe (NumToArray)</h4>
+<!-- L1  13. Custom Pipe (NumToArray)..existen problemas en la plantilla
+cuando iteramos solo colecciones, arrays que pasa si quiero repetir algo cinco veces
+o seis veces o siete veces...lo que aremos en este pipe sera tranformar elnumero
+que recibimos como valor en un aray y asi ya se convierte en una coleccion y podemos
+iterarlo ...cramos el pipe  NumToArr en la terminal vamos al => num-to-arr L2-->
+
+<!-- L3 con esto tenemos un PIPE que nos permite ejecutar un ngFor tantas veces
+como queramos sin necesidad de tener una coleccion a priori -->
+<ul>
+    <li *ngFor="let num of 7|numToArr">
+        {{num}}
+    </li>
+</ul>
